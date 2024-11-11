@@ -13,7 +13,7 @@
                     ("/")) eq '/about.jsp' ? ' active' : ''}
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href=${pageContext.request.contextPath}>Cars</a>
+            <a class="nav-link active" aria-current="page" href=${pageContext.request.contextPath}/Cars>Cars</a>
             ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
                     ("/")) eq '/cars.jsp' ? ' active' : ''}
           </li>
