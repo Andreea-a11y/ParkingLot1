@@ -34,3 +34,7 @@
     </div>
   </nav>
 </header>
+<ul>
+  <li><a href="cars.jsp">Cars</a></li>
+  <li><a href="users.jsp">Users</a></li>
+</ul>
