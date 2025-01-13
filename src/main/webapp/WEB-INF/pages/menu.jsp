@@ -13,10 +13,24 @@
                     ("/")) eq '/about.jsp' ? ' active' : ''}
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href=${pageContext.request.contextPath}/Cars>Cars</a>
-            ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
+            <c:if test="${pageContext.request.isUserInRole('READ_CARS')}">
+              <a class="nav-link active" aria-current="page" href=${pageContext.request.contextPath}/Cars>Cars
+              ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
                     ("/")) eq '/cars.jsp' ? ' active' : ''}
-          </li>
+              aria-current="page" href="${pageContext.request.contextPath}/Cars">Cars</a>
+            </c:if>
+
+          </li
+          <li class="nav-item">
+            <c:if test="${pageContext.request.isUserInRole('READ_CARS')}">
+              <a class="nav-link active" aria-current="page" href=${pageContext.request.contextPath}/Users>Users
+                  ${pageContext.request.requestURI.substring(pageContext.request.requestURI.lastIndexOf
+                          ("/")) eq '/users.jsp' ? ' active' : ''}
+                aria-current="page" href="${pageContext.request.contextPath}/Users">Users</a>
+            </c:if>
+
+          </li
+
           <li class="nav-item">
             <a class="nav-link" href="${pageContext.request.contextPath}/about.jsp">Link</a>
           </li>
@@ -27,8 +41,20 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
+            <c:choose>
+              <c:when test="${pageContext.request.getRemoteUser() == null}">
+                <a class="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
+              </c:when>
+              <c:otherwise>
+                <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
+              </c:otherwise>
+            </c:choose>
             <a class="nav-link"href=" ${pageContext.request.contextPath}/Login">Login</a>
           </li>
+        </ul>
+        <ul>
+          <li><a href="/Users">Users</a></li>
+          <!-- alte intrări din meniu -->
         </ul>
       </div>
     </div>

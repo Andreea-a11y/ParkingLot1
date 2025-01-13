@@ -8,6 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "car")
 public class Car {
+    public Object setParkingSpot;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -42,5 +43,11 @@ public class Car {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public void setLicensePlate(String licensePlate) {
+    }
+
+    public void setParkingSpot(String parkingSpot) {
     }
 }
