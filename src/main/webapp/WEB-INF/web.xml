@@ -11,4 +11,26 @@
             <form-error-page>/Login</form-error-page>
         </form-login-config>
     </login-config>
+
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Cars Servlet</web-resource-name>
+            <url-pattern>/Cars</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>READ_CARS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Cars POST</web-resource-name>
+            <url-pattern>/Cars</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>WRITE_CARS</role-name>
+        </auth-constraint>
+    </security-constraint>
+
 </web-app>

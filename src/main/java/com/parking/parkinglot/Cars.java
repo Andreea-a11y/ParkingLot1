@@ -13,42 +13,47 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@DeclareRoles({"READ_CARS","WRITE_CARS"})
+@DeclareRoles({"READ_CARS", "WRITE_CARS"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_CARS"}),
-httpMethodConstraints = {@HttpMethodConstraint(value="POST",rolesAllowed = {WRITE_CARS})})
-
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_CARS"})})
 @WebServlet(name = "Cars", value = "/Cars")
 public class Cars extends HttpServlet {
 
-
-    private Cars() {
-    }
-
-    public static Cars createCars() {
-        return new Cars();
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        List<CarDto> cars=carsBean.findAllCars();
-        request.setAttribute("cars", cars);
-        request.setAttribute("numberOfFreeParkingSpots", 10);
-    request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request,response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse
-            response) throws ServletException, IOException {
-        String[] carIdsAsString=request.getParameterValues("carId");
-        if(carIdsAsString!=null){
-            List<Long>carIds=new ArrayList<>();
-            Arrays.stream(carIdsAsString).forEach(carId -> carIds.add(Long.parseLong(carIds.toString())));
-            carsBean.deleteCarsByIds(carIds);
-        }
-        response.sendRedirect(request.getContextPath()+"/cars");
-    }
+    // Nu mai este necesar constructorul privat, pentru că Servlet-urile sunt gestionate de container
+    // implicit constructorul implicit este suficient.
 
     @Inject
     CarsBean carsBean;
+
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Obține lista de mașini
+        List<CarDto> cars = carsBean.findAllCars();
+        request.setAttribute("cars", cars);
+
+        // Setează numărul de locuri de parcare disponibile (de exemplu, static pentru demonstrație)
+        request.setAttribute("numberOfFreeParkingSpots", 10);
+
+        // Trimite răspunsul la pagina JSP
+        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Obține parametrii carId din request
+        String[] carIdsAsString = request.getParameterValues("carId");
+
+        if (carIdsAsString != null) {
+            List<Long> carIds = new ArrayList<>();
+
+            // Conversie corectă a ID-urilor din String în Long
+            Arrays.stream(carIdsAsString).forEach(carId -> carIds.add(Long.parseLong(carId)));
+
+            // Șterge mașinile pe baza ID-urilor
+            carsBean.deleteCarsByIds(carIds);
+        }
+
+        // Redirecționează către pagina de listare a mașinilor
+        response.sendRedirect(request.getContextPath() + "/Cars");
+    }
 }
