@@ -19,8 +19,7 @@ import java.util.List;
 @WebServlet(name = "Cars", value = "/Cars")
 public class Cars extends HttpServlet {
 
-    // Nu mai este necesar constructorul privat, pentru că Servlet-urile sunt gestionate de container
-    // implicit constructorul implicit este suficient.
+
 
     @Inject
     CarsBean carsBean;
